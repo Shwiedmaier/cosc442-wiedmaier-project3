@@ -13,7 +13,7 @@ import org.junit.Test;
 
 public class VendingMachineTest {
 	VendingMachine testVend;
-	VendingMachineItem milk, tea, water, soda;
+	VendingMachineItem milk, tea, water, soda, beer;
 	
 	@Before
 	
@@ -23,6 +23,7 @@ public class VendingMachineTest {
 		tea = new VendingMachineItem("Tea", 2 );
 		water = new VendingMachineItem("Water", 3 );
 		soda = new VendingMachineItem("Soda", 4 );
+		beer = new VendingMachineItem("Beer", 5 );
 		testVend.addItem(milk, "A");
 		testVend.balance = 100;
 		
@@ -38,9 +39,33 @@ public class VendingMachineTest {
 		testVend.addItem(water, "C");
 		testVend.addItem(soda, "D");
 		
+		
 		assertEquals(testVend.getItem("B"), tea);
 		assertEquals(testVend.getItem("C"), water);
 		assertEquals(testVend.getItem("D"), soda);
+		
+		
+				
+	}
+	
+	/**
+	 * Test to make sure exceptions passed properly
+	 */
+	@Test(expected = VendingMachineException.class)
+	public void testAddItemException() {
+		testVend.addItem(beer, "D");
+		testVend.addItem(soda, "D");
+		
+				
+	}
+	
+	/**
+	 * Test to make sure exceptions passed properly
+	 */
+	@Test(expected = VendingMachineException.class)
+	public void testAddItemException2() {
+		
+		testVend.addItem(beer, "E");
 		
 				
 	}
@@ -55,12 +80,34 @@ public class VendingMachineTest {
 	}
 
 	/**
+	 * Test to make sure exceptions passed properly
+	 */
+	@Test(expected = VendingMachineException.class)
+	public void testRemoveItemException() {
+		
+		testVend.removeItem("D");
+		
+				
+	}
+	
+	/**
 	 * Test to make sure adding money increases the balance
 	 */
 	@Test
 	public void testInsertMoney() {
 		testVend.insertMoney(69.00);
 		assertEquals(testVend.balance, 169, .001);
+	}
+	
+	/**
+	 * Test to make sure exceptions passed properly
+	 */
+	@Test(expected = VendingMachineException.class)
+	public void testInsertMoneyException() {
+		testVend.insertMoney(-1);
+		
+		
+				
 	}
 
 	/**
@@ -79,6 +126,12 @@ public class VendingMachineTest {
 		testVend.makePurchase("A");
 		assertEquals(testVend.balance, 99, .001);
 		assertEquals(testVend.getItem("A"),null);
+		testVend.makePurchase("B");
+		testVend.balance = 0;
+		testVend.addItem(water, "C");
+		testVend.makePurchase("C");
+		
+		
 	}
 	
 	/**

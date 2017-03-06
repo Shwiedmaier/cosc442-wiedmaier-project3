@@ -21,10 +21,17 @@ public class VendingMachineItemTest {
 		assertEquals(Tester1.getName(), "Milk");
 		assertEquals(Tester1.getPrice(), 1, .002);
 	}
+	
+	@Test(expected = VendingMachineException.class)
+	public void testVendingMachineItemException() {
+		Tester1 = new VendingMachineItem("Milk", -1);
+	
+	}
 
 	@Test
 	public void testGetName() {
 		assertEquals(Tester2.getName(), "Tea");
+		Tester2.getName();
 		
 	}
 
